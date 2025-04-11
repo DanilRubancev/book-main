@@ -1,0 +1,13 @@
+{% extends 'echo/base.html' %}
+
+
+
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Привет, {{ user.username }}!</h2>
+    <p>Добро пожаловать в свой профиль.</p>
+  </div>
+{% endblock %}

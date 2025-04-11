@@ -1,0 +1,6 @@
+<h1>Удалить книгу "{{ book.title }}"?</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Удалить</button>
+    <a href="{% url 'book_list' %}">Отмена</a>
+</form>
