@@ -1,0 +1,16 @@
+{% extends 'echo/base.html' %}
+{% block content %}
+<h2>Корзина</h2>
+<ul class="list-group mb-3">
+  {% for item in items %}
+    <li class="list-group-item d-flex justify-content-between">
+      {{ item.book.title }} ({{ item.quantity }} шт.)
+      <span>{{ item.total_price }} ₽</span>
+    </li>
+  {% empty %}
+    <li class="list-group-item">Корзина пуста.</li>
+  {% endfor %}
+</ul>
+<h4>Итого: {{ total }} ₽</h4>
+<a href="{% url 'create_order' %}" class="btn btn-primary">Оформить заказ</a>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'echo/base.html' %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<h2>Ваша корзина</h2>
+
+{% if not cart.items %}
+    <div class="alert alert-warning">Ваша корзина пуста.</div>
+    <div class="alert alert-info">Добавьте книги, чтобы оформить заказ.</div>
+    <div class="alert alert-success">Перейдите в каталог, чтобы выбрать книги!</div>
+    <a href="{% url 'book_list' %}" class="btn btn-primary mt-3">В каталог</a>
+{% else %}
+    <!-- выводим список товаров в корзине -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Книга</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Итого</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in cart.items %}
+            <tr>
+                <td>{{ item.book.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.book.price }} ₽</td>
+                <td>{{ item.total_price }} ₽</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>Общая сумма:</strong> {{ cart.total_price }} ₽</p>
+    <a href="{% url 'create_order' %}" class="btn btn-success">Оформить заказ</a>
+{% endif %}
+{% endblock %}

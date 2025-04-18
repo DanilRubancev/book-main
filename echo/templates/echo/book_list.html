@@ -11,19 +11,25 @@
     {% endif %}
 
     <!-- Список книг -->
-    <ul class="list-group">
-        {% for book in books %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ book.title }} — {{ book.author }} ({{ book.publication_year }})
-                {% if user.is_staff %}
-                    <span>
-                        <a class="btn btn-sm btn-primary" href="{% url 'book_update' book.pk %}">Изменить</a>
-                        <a class="btn btn-sm btn-danger" href="{% url 'book_delete' book.pk %}">Удалить</a>
-                    </span>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    {% for book in books %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ book.title }}</h5>
+        <p class="card-text">{{ book.author }} — {{ book.price }} ₽</p>
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'add_to_cart' book.id %}" class="btn btn-success">Положить в корзину</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-outline-secondary">Войти, чтобы добавить</a>
+        {% endif %}
+
+        {% if user.is_staff %}
+          <a class="btn btn-sm btn-primary" href="{% url 'book_update' book.pk %}">Изменить</a>
+          <a class="btn btn-sm btn-danger" href="{% url 'book_delete' book.pk %}">Удалить</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
 
     <!-- Пагинация -->
     <div class="mt-4">
