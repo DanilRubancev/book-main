@@ -25,7 +25,7 @@ class CustomUser(AbstractUser):
     print("CustomUser model loaded")
 
 
-class CartItem(models.Model):
+class CartItem(models.Model): #корзина
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
@@ -33,14 +33,14 @@ class CartItem(models.Model):
     def total_price(self):
         return self.quantity * self.book.price
 
-class Order(models.Model):
+class Order(models.Model): #заказ
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def total_cost(self):
         return sum(item.book.price * item.quantity for item in self.items.all())
 
-class OrderItem(models.Model):
+class OrderItem(models.Model): #элемент заказа(товар в заказе)
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()

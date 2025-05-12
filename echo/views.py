@@ -97,7 +97,7 @@ def account_view(request):
     return render(request, 'echo/account.html', {'form': form})
 
 @login_required
-def add_to_cart(request, book_id):
+def add_to_cart(request, book_id):#добавление в корзину
     book = get_object_or_404(Book, pk=book_id)
     cart_item, created = CartItem.objects.get_or_create(user=request.user, book=book)
     if not created:
@@ -106,13 +106,13 @@ def add_to_cart(request, book_id):
     return redirect('cart_view')
 
 @login_required
-def cart_view(request):
+def cart_view(request): #оформление корзины
     items = CartItem.objects.filter(user=request.user)
     total = sum(item.total_price() for item in items)
     return render(request, 'echo/cart.html', {'items': items, 'total': total})
 
 @login_required
-def create_order(request):
+def create_order(request): #создание заказа
     cart_items = CartItem.objects.filter(user=request.user)
     if not cart_items:
         return redirect('cart_view')
